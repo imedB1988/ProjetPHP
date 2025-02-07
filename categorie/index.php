@@ -25,7 +25,7 @@
 <tbody>
 <?php
 $count=1;
-$sel_query="Select * from categorie ORDER BY id desc;";
+$sel_query="Select * from categorie ";
 $result = mysqli_query($conn,$sel_query);
 while($row = mysqli_fetch_assoc($result)) { ?>
 <tr><td align="center"><?php echo $count; ?></td>
