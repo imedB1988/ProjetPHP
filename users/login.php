@@ -18,13 +18,24 @@ if (isset($_POST['submit']))
             $_SESSION['IS_LOGGEDIN']='yes';
 
             if($row['role']=='admin'){
-                header('location:dashboard.php');
+            
+                $query="INSERT INTO permissions (role, can_edit, can_delete, can_view) VALUES ('admin', 1, 1, 1)";
+                if (mysqli_query($conn, $query)) {
+                  header('location:dashboard.php');
+                } else {
+                  echo "Error: " . mysqli_error($conn);
+              }
                 die();
             }
             else
             {
+              $query="INSERT INTO permissions (role, can_edit, can_delete, can_view) VALUES ('user', 1, 0, 1)";
+              if (mysqli_query($conn, $query)) {
                 header('location:userdashboard.php');
-                die();
+              } else {
+                echo "Error: " . mysqli_error($conn);
+            }
+              die();
             }
 
          
@@ -66,7 +77,7 @@ if (isset($_POST['submit']))
 <form name="form" method="post" action=""> 
 <input type="hidden" name="new" value="1" />
 <div class="input-group mb-3">
-          <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur" value="<?php echo $username; ?>">
+          <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -74,7 +85,7 @@ if (isset($_POST['submit']))
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" name="password" placeholder="Mot de Passe" value="<?php echo $password;?>">
+          <input type="password" class="form-control" name="password" placeholder="Mot de Passe">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
